@@ -1,0 +1,51 @@
+name: Build release
+
+on:
+  create:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Build app
+        run: |
+          windres -o upm.syso upm.rc
+          $version = "${{ github.ref }}".Substring(11)
+          $LINKFLAGS = "-H windowsgui -X main.gitHash=$(git show -s --format=%h) -X main.version=$version"
+          go build -o "./UnityPackageManager/upm.exe" -ldflags "$LINKFLAGS"
+
+      - name: Download webview DLL
+        run: |
+          iwr https://github.com/webview/webview_csharp/raw/ba7bb3189fa678962d0d9fdb467d0fadcaa0eab2/libs/WebView2Loader.dll -OutFile UnityPackageManager/WebView2Loader.dll
+          iwr https://github.com/webview/webview_csharp/raw/ba7bb3189fa678962d0d9fdb467d0fadcaa0eab2/libs/webview.dll -OutFile UnityPackageManager/webview.dll
+
+      - name: Package file
+        run: |
+          7z a unity-package-manager.zip UnityPackageManager/*
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./unity-package-manager.zip
+          asset_name: unity-package-manager.zip
+          asset_content_type: application/zip

@@ -1,0 +1,24 @@
+1 ICON "icon/icon-48.ico"
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+FILETYPE        0X1
+FILESUBTYPE     0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "CompanyName", "GizmoOAO"
+      VALUE "FileDescription", "Unity Package Manager"
+      VALUE "InternalName", "unity-package-manager"
+      VALUE "OriginalFilename", "upm.exe"
+      VALUE "ProductName", "Unity Package Manager"
+      VALUE "LegalCopyright", "MIT License"
+      VALUE "ProductVersion", "1.0.0.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0, 1200
+  END
+END
