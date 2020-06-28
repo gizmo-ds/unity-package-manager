@@ -17,7 +17,7 @@ jobs:
 
       - name: Build app
         run: |
-          version="${{ github.ref##*/ }}"
+          version="${GITHUB_REF##*/}"
           gitHash="$(git show -s --format=%h)"
           LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$gitHash -X upm/cmd.version=$version"
           cat versioninfo.json | jq ".StringFileInfo.ProductVersion=\"$version\"" | jq ".StringFileInfo.FileVersion=\"$version (build_$gitHash)\"" > versioninfo.json
