@@ -14,7 +14,7 @@ jobs:
 
       - name: Build app
         run: |
-          apt install mingw-w64
+          sudo apt install -y mingw-w64
           i686-w64-mingw32-windres -o upm.syso upm.rc
           version="${{ github.ref }}".Substring(11)
           LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$(git show -s --format=%h) -X upm/cmd.version=$version"
