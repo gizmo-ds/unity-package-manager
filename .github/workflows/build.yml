@@ -17,18 +17,10 @@ jobs:
 
       - name: Build app
         run: |
-          version="${GITHUB_REF##*/}"
-          gitHash="$(git show -s --format=%h)"
           export PATH=$PATH:$(go env GOPATH)/bin
-          LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$gitHash -X upm/cmd.version=$version"
-          cat versioninfo.json | jq ".StringFileInfo.ProductVersion=\"$version\"" | jq ".StringFileInfo.FileVersion=\"$version (build_$gitHash)\"" > versioninfo.json
-          echo "versioninfo.json:\n$(cat versioninfo.json)"
-          CGO_ENABLED=0
-          GOOS=windows
-          GOARCH=amd64
           go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
-          go generate
-          go build -o "./out/unity-package-manager.exe" -ldflags "$LINKFLAGS"
+          LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$gitHash -X upm/cmd.version=$version"
+          make windows-amd64
 
       - name: Package file
         run: |
