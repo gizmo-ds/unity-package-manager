@@ -3,9 +3,10 @@ module upm
 go 1.14
 
 require (
+	github.com/gen2brain/beeep v0.0.0-20200526185328-e9c15c258e28
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-toast/toast v0.0.0-20190211030409-01e6764cf0a4
-	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d // indirect
-	github.com/zserge/lorca v0.1.9
+	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
 	github.com/spf13/cobra v1.0.0
+	github.com/zserge/lorca v0.1.9
+	golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae // indirect
 )

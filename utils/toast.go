@@ -1,9 +1,10 @@
 package utils
 
 import (
+	"log"
 	"path/filepath"
 
-	"github.com/go-toast/toast"
+	"github.com/gen2brain/beeep"
 )
 
 const (
@@ -21,11 +22,7 @@ func Toast(msg string, title ...string) {
 	if len(title) > 0 {
 		t = title[0]
 	}
-	notification := toast.Notification{
-		AppID:   AppID,
-		Title:   t,
-		Message: msg,
-		Icon:    iconfile,
+	if err := beeep.Notify(t, msg, iconfile); err != nil {
+		log.Println(err.Error())
 	}
-	_ = notification.Push()
 }
