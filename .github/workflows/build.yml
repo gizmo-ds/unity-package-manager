@@ -17,11 +17,12 @@ jobs:
 
       - name: Build app
         run: |
-          version="${{ github.ref }}"
+          version="${{ github.ref##*/ }}"
           gitHash="$(git show -s --format=%h)"
           LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$gitHash -X upm/cmd.version=$version"
-          cat versioninfo.json | jq ".StringFileInfo.ProductVersion=\"$version\"" | jq ".StringFileInfo.FileVersion=\"$version (build_$gitHash)\""
+          cat versioninfo.json | jq ".StringFileInfo.ProductVersion=\"$version\"" | jq ".StringFileInfo.FileVersion=\"$version (build_$gitHash)\"" > versioninfo.json
           go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+          go env
           go generate
           go build -o "./out/unity-package-manager.exe" -ldflags "$LINKFLAGS"
 
