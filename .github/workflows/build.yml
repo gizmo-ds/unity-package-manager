@@ -16,13 +16,12 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Build app
-        env:
-          GOBIN: ${GITHUB_WORKSPACE}
         run: |
           version="${GITHUB_REF##*/}"
           gitHash="$(git show -s --format=%h)"
           LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$gitHash -X upm/cmd.version=$version"
           cat versioninfo.json | jq ".StringFileInfo.ProductVersion=\"$version\"" | jq ".StringFileInfo.FileVersion=\"$version (build_$gitHash)\"" > versioninfo.json
+          export PATH=$PATH:$(go env GOPATH)/bin
           go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
           go generate
           go build -o "./out/unity-package-manager.exe" -ldflags "$LINKFLAGS"
