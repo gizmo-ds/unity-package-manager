@@ -18,6 +18,7 @@ func web() *http.Server {
 	if checkPort() {
 		return nil
 	}
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.Static("/", "./public")
 	r.POST("/hello", func(c *gin.Context) {

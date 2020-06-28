@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>UnityPackageManager</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>UnityPackageManager</title>
-</head>
-
-<body>
-Hello
-</body>
-
+  <body>
+    <input type="file" accept=".unitypackage" id="openfile" />
+    <div id="info"></div>
+    <script>
+      var fileInput = document.getElementById("openfile");
+      fileInput.addEventListener("change", function () {
+        if (fileInput.files.length != 1) return;
+        /*  openpackage(fileInput.value);  */
+        console.log(fileInput.value);
+      });
+      function getQueryString(name) {
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        let r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+          return decodeURIComponent(r[2]);
+        }
+        return null;
+      }
+      const openpackage = async (filename) => {
+        if (!filename) return;
+        var info = await window._openpackage(filename);
+        document.getElementById("info").innerText = info.length;
+      };
+      var filename = getQueryString("file");
+      openpackage(filename);
+    </script>
+  </body>
 </html>
