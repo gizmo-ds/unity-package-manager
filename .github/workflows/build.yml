@@ -17,10 +17,12 @@ jobs:
 
       - name: Build app
         run: |
-          sudo apt install -y mingw-w64
-          i686-w64-mingw32-windres -o upm.syso upm.rc
           version="${{ github.ref }}".Substring(11)
-          LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$(git show -s --format=%h) -X upm/cmd.version=$version"
+          gitHash="$(git show -s --format=%h)"
+          LINKFLAGS="-H windowsgui -X upm/cmd.gitHash=$gitHash -X upm/cmd.version=$version"
+          cat versioninfo.json | jq ".StringFileInfo.ProductVersion=\"$version\"" | jq ".StringFileInfo.FileVersion=\"$version (build_$gitHash)\""
+          go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+          go generate
           go build -o "./out/unity-package-manager.exe" -ldflags "$LINKFLAGS"
 
       - name: Package file

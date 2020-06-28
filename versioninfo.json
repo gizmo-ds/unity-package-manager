@@ -1,0 +1,43 @@
+{
+  "FixedFileInfo": {
+    "FileVersion": {
+      "Major": 1,
+      "Minor": 0,
+      "Patch": 0,
+      "Build": 0
+    },
+    "ProductVersion": {
+      "Major": 1,
+      "Minor": 0,
+      "Patch": 0,
+      "Build": 0
+    },
+    "FileFlagsMask": "3f",
+    "FileFlags ": "00",
+    "FileOS": "40004",
+    "FileType": "01",
+    "FileSubType": "00"
+  },
+  "StringFileInfo": {
+    "Comments": "",
+    "CompanyName": "GizmoOAO",
+    "FileDescription": "Unity Package Manager",
+    "FileVersion": "",
+    "InternalName": "UPM",
+    "LegalCopyright": "MIT License. Copyright (c) 2020 GizmoOAO",
+    "LegalTrademarks": "",
+    "OriginalFilename": "unity-package-manager.exe",
+    "PrivateBuild": "",
+    "ProductName": "UnityPackageManager",
+    "ProductVersion": "",
+    "SpecialBuild": ""
+  },
+  "VarFileInfo": {
+    "Translation": {
+      "LangID": "0",
+      "CharsetID": "1200"
+    }
+  },
+  "IconPath": "resource/icon/icon-48.ico",
+  "ManifestPath": "resource/unity-package-manager.manifest"
+}

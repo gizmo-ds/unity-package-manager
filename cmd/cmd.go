@@ -42,6 +42,7 @@ var (
 )
 
 func Execute() {
+	cobra.MousetrapHelpText = ""
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.Execute()
 }

@@ -13,7 +13,7 @@ const (
 var iconfile string
 
 func init() {
-	iconfile, _ = filepath.Abs("icon/default.png")
+	iconfile, _ = filepath.Abs("resource/icon/default.png")
 }
 
 func Toast(msg string, title ...string) {

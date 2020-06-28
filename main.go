@@ -1,3 +1,4 @@
+//go:generate goversioninfo -o=unity-package-manager.syso
 package main
 
 import (
