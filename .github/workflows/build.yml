@@ -16,17 +16,14 @@ jobs:
         run: |
           windres -o upm.syso upm.rc
           $version = "${{ github.ref }}".Substring(11)
-          $LINKFLAGS = "-H windowsgui -X main.gitHash=$(git show -s --format=%h) -X main.version=$version"
-          go build -o "./UnityPackageManager/upm.exe" -ldflags "$LINKFLAGS"
-
-      - name: Download webview DLL
-        run: |
-          iwr https://github.com/webview/webview_csharp/raw/ba7bb3189fa678962d0d9fdb467d0fadcaa0eab2/libs/WebView2Loader.dll -OutFile UnityPackageManager/WebView2Loader.dll
-          iwr https://github.com/webview/webview_csharp/raw/ba7bb3189fa678962d0d9fdb467d0fadcaa0eab2/libs/webview.dll -OutFile UnityPackageManager/webview.dll
+          $LINKFLAGS = "-H windowsgui -X upm/cmd.gitHash=$(git show -s --format=%h) -X upm/cmd.version=$version"
+          go build -o "./out/unity-package-manager.exe" -ldflags "$LINKFLAGS"
 
       - name: Package file
         run: |
-          7z a unity-package-manager.zip UnityPackageManager/*
+          7z a unity-package-manager.zip out/*
+          7z a unity-package-manager.zip LICENSE
+          7z a unity-package-manager.zip README.md
 
       - name: Create Release
         id: create_release
