@@ -8,6 +8,8 @@ LINKFLAGS=-H windowsgui -X upm/cmd.gitHash=${GIT_HASH} -X upm/cmd.version=${VERS
 all: windows-amd64
 
 update-versioninfo:
+	cat versioninfo.json | jq -c ".StringFileInfo.ProductVersion=\"$(VERSION)\""
+	cat versioninfo.json | jq -c ".StringFileInfo.FileVersion=\"$(VERSION) (build_$(GIT_HASH))\""
 	cat versioninfo.json | jq -c ".StringFileInfo.ProductVersion=\"$(VERSION)\"" | jq -c ".StringFileInfo.FileVersion=\"$(VERSION) (build_$(GIT_HASH))\"" > versioninfo.json
 
 windows-amd64: update-versioninfo
